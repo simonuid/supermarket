@@ -24,7 +24,7 @@ describe('components > App', () => {
      * `wrapper`
      * @see https://testing-library.com/docs/react-testing-library/api#wrapper
      */
-    const {asFragment} = render(<App />, {
+    const { asFragment } = render(<App />, {
       wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
     });
 
