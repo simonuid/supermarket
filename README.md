@@ -96,8 +96,6 @@ Eslint rules are commented for your convenience, feel free to tweak or remove th
 "react/no-array-index-key": 1,
 // Allow modules with named exports only.
 "import/prefer-default-export": 0,
-// Force {foo: 'bar'} object literal syntax.
-"object-curly-spacing": ["error", "never"],
 // Throw warning instead of error when function is not properly formatted. 
 // Feel free to choose your favorite option https://eslint.org/docs/rules/arrow-body-style
 "arrow-body-style": ["warn", "as-needed"],

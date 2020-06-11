@@ -7,21 +7,21 @@ const useActions = () => {
   const dispatch = useDispatch();
   const count = useCountValue();
 
-  const incrementCounter = useCallback(() => {
+  const addItem = useCallback(() => {
     dispatch({
       type: INCREMENT_COUNTER,
       value: count + 1,
     });
   }, [count, dispatch]);
 
-  const decrementCounter = useCallback(() => {
+  const removeItem = useCallback(() => {
     dispatch({
       type: DECREMENT_COUNTER,
       value: count - 1,
     });
   }, [count, dispatch]);
 
-  return { incrementCounter, decrementCounter };
+  return { addItem, removeItem };
 };
 
 export default useActions;
