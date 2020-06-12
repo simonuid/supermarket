@@ -21,23 +21,17 @@ const useActions = () => {
   }, [basketItems, dispatch]);
 
   const removeItem = useCallback((id) => {
-    const newData = basketItems.filter(i => {
-      console.log(i, 'iiiii')
-      return i.id === id
-    });
+    const index = basketItems
+      .map(i => i.item)
+      .findIndex((f => f.id === id));
 
-    const test = basketItems.find(i => {
-      // console.log(i, 'iiiii')
-      return i.id === id
-    });
-
-    console.log(typeof basketItems, 'basketItems')
-    console.log(test, 'test')
-    console.log(id, 'id')
+    if (index > -1) {
+      basketItems.splice(index, 1);
+    }
 
     dispatch({
       type: REMOVE_ITEM,
-      payload: newData,
+      payload: basketItems,
     });
   }, [basketItems, dispatch]);
 

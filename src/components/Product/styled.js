@@ -33,4 +33,24 @@ export default styled.div`
     padding-right: 10px;
     margin-top: 2px;
   }
+  > .bottom-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 20px;
+    button {
+      height: 25px;
+      width: 40px;
+      
+      border-radius: 4px;
+      border: none;
+      &:first-child {
+        margin-right: 10px;
+        background-color: steelblue;
+      }
+      &:nth-child(2) {
+        background-color: lightsteelblue;
+      }
+    }
+  }
 `;

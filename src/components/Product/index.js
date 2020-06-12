@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useCountValue, useActions } from '../../features/basket';
+import { useActions } from '../../features/basket';
 import Styled from './styled';
 
-const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, url, discount }) => {
+const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, url, promotion }) => {
   const { addItem, removeItem } = useActions();
-  // const count = useCountValue();
   
   return (
     <Styled>
@@ -15,8 +14,8 @@ const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, url, discoun
       <img src={url} alt={name} />
 
       <div className='middle-div'>
-        {discount && (
-          <p className='discount'>{discount.text}</p>
+        {promotion && (
+          <p className='discount'>{promotion}</p>
         )}
       </div>
       
@@ -28,23 +27,20 @@ const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, url, discoun
         <p className='unitPrice'>£{unitPrice}/kg</p>
       )}
 
-      <button
-        type="button"
-        onClick={() => addItem(id, name, priceByItem, priceByWeight, unitPrice)}
-      >
-        +1
-      </button>
+      <div className='bottom-div'>
+        <button
+          type="button"
+          onClick={() => addItem(id, name, priceByItem, priceByWeight, unitPrice)}
+        >
+          +1
+        </button>
 
-      <button
-        type="button"
-        onClick={() => removeItem(id)}
-      >
-
-        -1
-      </button>
-
-      <div>
-        {/* Total value: <strong>{count}</strong> */}
+        <button
+          type="button"
+          onClick={() => removeItem(id)}
+        >
+          -1
+        </button>
       </div>
       
     </Styled>
@@ -58,7 +54,7 @@ Product.propTypes = {
   priceByWeight: PropTypes.bool,
   unitPrice: PropTypes.number,
   url: PropTypes.string,
-  discount: PropTypes.objectOf(PropTypes.object),
+  promotion: PropTypes.string,
 };
 
 Product.defaultProps = {
@@ -68,7 +64,7 @@ Product.defaultProps = {
   priceByWeight: false,
   unitPrice: 0,
   url: '',
-  discount: null,
+  promotion: null,
 };
 
 export default Product;

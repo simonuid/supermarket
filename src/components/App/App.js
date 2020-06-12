@@ -13,7 +13,7 @@ const App = () => (
       url="https://mysupermarket.s3-eu-west-1.amazonaws.com/beans.png"
       unitPrice={0.50}
       priceByItem
-      discount={{ text: 'Get 3 for 2!', calc: () => {}}}
+      promotion="Get 3 for 2!"
     />
     <Product
       id='item_coke'
