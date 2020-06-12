@@ -1,25 +1,45 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import useCountValue from './selectors';
-import { INCREMENT_COUNTER, DECREMENT_COUNTER } from './actionTypes';
+import { REMOVE_ITEM, ADD_ITEM } from './actionTypes';
 
 const useActions = () => {
   const dispatch = useDispatch();
-  const count = useCountValue();
+  const basketItems = useCountValue();
 
-  const addItem = useCallback(() => {
+  const addItem = useCallback((id, name, priceByItem, priceByWeight, unitPrice) => {
     dispatch({
-      type: INCREMENT_COUNTER,
-      value: count + 1,
+      type: ADD_ITEM,
+      item: {
+        id,
+        name,
+        priceByItem,
+        priceByWeight,
+        unitPrice,
+      },
     });
-  }, [count, dispatch]);
+  }, [basketItems, dispatch]);
 
-  const removeItem = useCallback(() => {
-    dispatch({
-      type: DECREMENT_COUNTER,
-      value: count - 1,
+  const removeItem = useCallback((id) => {
+    const newData = basketItems.filter(i => {
+      console.log(i, 'iiiii')
+      return i.id === id
     });
-  }, [count, dispatch]);
+
+    const test = basketItems.find(i => {
+      // console.log(i, 'iiiii')
+      return i.id === id
+    });
+
+    console.log(typeof basketItems, 'basketItems')
+    console.log(test, 'test')
+    console.log(id, 'id')
+
+    dispatch({
+      type: REMOVE_ITEM,
+      payload: newData,
+    });
+  }, [basketItems, dispatch]);
 
   return { addItem, removeItem };
 };

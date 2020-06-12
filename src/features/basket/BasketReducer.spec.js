@@ -1,7 +1,7 @@
-import {INCREMENT_COUNTER} from './actionTypes';
-import CounterReducer from './CounterReducer';
+import { INCREMENT_COUNTER } from './actionTypes';
+import BasketReducer from './BasketReducer';
 
-describe('features > counter > CounterReducer', () => {
+describe('features > counter > BasketReducer', () => {
   /**
    * All test cases are very simple, since Redux
    * reducers are pure functions

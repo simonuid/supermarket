@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useCountValue, useActions } from '../../features/basket';
 import Styled from './styled';
 
-const Product = ({ name, priceByItem, priceByWeight, unitPrice, url, discount }) => {
+const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, url, discount }) => {
   const { addItem, removeItem } = useActions();
-  const count = useCountValue();
+  // const count = useCountValue();
   
   return (
     <Styled>
@@ -30,20 +30,21 @@ const Product = ({ name, priceByItem, priceByWeight, unitPrice, url, discount })
 
       <button
         type="button"
-        onClick={addItem}
+        onClick={() => addItem(id, name, priceByItem, priceByWeight, unitPrice)}
       >
         +1
       </button>
 
       <button
         type="button"
-        onClick={removeItem}
+        onClick={() => removeItem(id)}
       >
+
         -1
       </button>
 
       <div>
-        Total value: <strong>{count}</strong>
+        {/* Total value: <strong>{count}</strong> */}
       </div>
       
     </Styled>
@@ -51,6 +52,7 @@ const Product = ({ name, priceByItem, priceByWeight, unitPrice, url, discount })
 };
 
 Product.propTypes = {
+  id: PropTypes.string,
   name: PropTypes.string,
   priceByItem: PropTypes.bool,
   priceByWeight: PropTypes.bool,
@@ -60,6 +62,7 @@ Product.propTypes = {
 };
 
 Product.defaultProps = {
+  id: '',
   name: '',
   priceByItem: false,
   priceByWeight: false,
