@@ -1,38 +1,78 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import useCountValue from './selectors';
+import useBasketValue from './selectors';
 import { REMOVE_ITEM, ADD_ITEM } from './actionTypes';
 
 const useActions = () => {
   const dispatch = useDispatch();
-  const basketItems = useCountValue();
+  const basketItems = useBasketValue();
 
+  const getIndex = id => basketItems
+    .map(i => i)
+    .findIndex((f => f.id === id));
+
+  // Add item action
   const addItem = useCallback((id, name, priceByItem, priceByWeight, unitPrice) => {
-    dispatch({
-      type: ADD_ITEM,
-      item: {
-        id,
-        name,
-        priceByItem,
-        priceByWeight,
-        unitPrice,
-      },
-    });
+    const index = getIndex(id);
+    // If basket has this item and it's priceByWeight, increase the weight by 0.1kg
+    if (priceByWeight && index > -1) {
+      const item = basketItems[index];
+      basketItems.splice(index, 1);  
+      dispatch({
+        type: ADD_ITEM,
+        payload: [
+          ...basketItems,
+          {
+            ...item,
+            weight: item.weight += 0.1
+          }
+        ]
+      });
+    } else {
+      dispatch({
+        type: ADD_ITEM,
+        payload: [
+          ...basketItems,
+          {
+            id,
+            name,
+            priceByItem,
+            priceByWeight,
+            unitPrice,
+            weight: priceByWeight ? 0.1 : null
+          }
+        ]
+      });
+    }
   }, [basketItems, dispatch]);
 
-  const removeItem = useCallback((id) => {
-    const index = basketItems
-      .map(i => i.item)
-      .findIndex((f => f.id === id));
-
-    if (index > -1) {
+  // Remove item action
+  const removeItem = useCallback((id, priceByWeight) => {
+    const index = getIndex(id);
+    // If basket has this item and it's priceByWeight, decrease the weight by 0.1kg
+    if (priceByWeight && index > -1) {
+      const item = basketItems[index];
       basketItems.splice(index, 1);
-    }
-
-    dispatch({
-      type: REMOVE_ITEM,
-      payload: basketItems,
-    });
+      dispatch({
+        type: REMOVE_ITEM,
+        payload:  [
+          ...basketItems,
+          {
+            ...item,
+            weight: item.weight -= 0.1
+          }
+        ]
+      });
+    } else {
+      if (index > -1) {
+        basketItems.splice(index, 1);
+      }
+  
+      dispatch({
+        type: REMOVE_ITEM,
+        payload: basketItems,
+      });
+    }   
   }, [basketItems, dispatch]);
 
   return { addItem, removeItem };

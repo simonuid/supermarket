@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useActions } from '../../features/basket';
 import Styled from './styled';
 
-const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, url, promotion }) => {
+const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, weight, url, promotion }) => {
   const { addItem, removeItem } = useActions();
   
   return (
@@ -30,16 +30,16 @@ const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, url, promoti
       <div className='bottom-div'>
         <button
           type="button"
-          onClick={() => addItem(id, name, priceByItem, priceByWeight, unitPrice)}
+          onClick={() => addItem(id, name, priceByItem, priceByWeight, unitPrice, weight)}
         >
-          +1
+          +
         </button>
 
         <button
           type="button"
-          onClick={() => removeItem(id)}
+          onClick={() => removeItem(id, priceByWeight)}
         >
-          -1
+          -
         </button>
       </div>
       
@@ -55,6 +55,7 @@ Product.propTypes = {
   unitPrice: PropTypes.number,
   url: PropTypes.string,
   promotion: PropTypes.string,
+  weight: PropTypes.number,
 };
 
 Product.defaultProps = {
@@ -65,6 +66,7 @@ Product.defaultProps = {
   unitPrice: 0,
   url: '',
   promotion: null,
+  weight: null,
 };
 
 export default Product;

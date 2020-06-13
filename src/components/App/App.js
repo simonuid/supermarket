@@ -28,6 +28,7 @@ const App = () => (
       url="https://mysupermarket.s3-eu-west-1.amazonaws.com/oranges.jpg"
       unitPrice={1.99}
       priceByWeight
+      weight={0}
     />
     <Basket />
   </div>

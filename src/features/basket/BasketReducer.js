@@ -10,10 +10,7 @@ export default (state = initialState, action) => {
     case ADD_ITEM:
       return { 
         ...state,
-        basketItems: [
-          ...state.basketItems,
-          { item: action.item }
-        ]
+        basketItems: action.payload
       };
     case REMOVE_ITEM:
       return { 
