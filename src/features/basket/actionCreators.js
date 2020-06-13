@@ -12,19 +12,19 @@ const useActions = () => {
     .findIndex((f => f.id === id));
 
   // Add item action
-  const addItem = useCallback((id, name, priceByItem, priceByWeight, unitPrice) => {
+  const addItem = useCallback((id, name, priceByItem, priceByWeight, unitPrice, promotion) => {
     const index = getIndex(id);
-    // If basket has this item and it's priceByWeight, increase the weight by 0.1kg
+    // If basket has this item and it's priceByWeight, increase the weight by 0.2kg
     if (priceByWeight && index > -1) {
       const item = basketItems[index];
-      basketItems.splice(index, 1);  
+      basketItems.splice(index, 1);
       dispatch({
         type: ADD_ITEM,
         payload: [
           ...basketItems,
           {
             ...item,
-            weight: item.weight += 0.1
+            weight: item.weight += 0.2
           }
         ]
       });
@@ -39,7 +39,8 @@ const useActions = () => {
             priceByItem,
             priceByWeight,
             unitPrice,
-            weight: priceByWeight ? 0.1 : null
+            promotion,
+            weight: priceByWeight ? 0.2 : null,
           }
         ]
       });
@@ -49,7 +50,7 @@ const useActions = () => {
   // Remove item action
   const removeItem = useCallback((id, priceByWeight) => {
     const index = getIndex(id);
-    // If basket has this item and it's priceByWeight, decrease the weight by 0.1kg
+    // If basket has this item and it's priceByWeight, decrease the weight by 0.2kg
     if (priceByWeight && index > -1) {
       const item = basketItems[index];
       basketItems.splice(index, 1);
@@ -59,7 +60,7 @@ const useActions = () => {
           ...basketItems,
           {
             ...item,
-            weight: item.weight -= 0.1
+            weight: item.weight -= 0.2
           }
         ]
       });

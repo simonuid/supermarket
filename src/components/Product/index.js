@@ -30,7 +30,7 @@ const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, weight, url,
       <div className='bottom-div'>
         <button
           type="button"
-          onClick={() => addItem(id, name, priceByItem, priceByWeight, unitPrice, weight)}
+          onClick={() => addItem(id, name, priceByItem, priceByWeight, unitPrice, promotion)}
         >
           +
         </button>
