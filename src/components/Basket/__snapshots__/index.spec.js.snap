@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components > Basket renders without crashing 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-AxjAm cdEQCG"
+  >
+    <h2>
+      Basket
+    </h2>
+    <ul
+      class="list"
+    >
+      <li>
+        <span
+          class="item-total"
+        >
+          <span>
+            Beans
+          </span>
+          <span
+            class="item-price"
+          >
+            £0.50
+          </span>
+        </span>
+      </li>
+      <li>
+        <span
+          class="item-total"
+        >
+          <span>
+            Beans
+          </span>
+          <span
+            class="item-price"
+          >
+            £0.50
+          </span>
+        </span>
+      </li>
+      <li>
+        <span
+          class="item-total"
+        >
+          <span>
+            Beans
+          </span>
+          <span
+            class="item-price"
+          >
+            £0.50
+          </span>
+        </span>
+      </li>
+      <li>
+        <span
+          class="item-total"
+        >
+          <span>
+            Coke
+          </span>
+          <span
+            class="item-price"
+          >
+            £0.70
+          </span>
+        </span>
+      </li>
+      <li>
+        <span
+          class="item-total"
+        >
+          <span>
+            Coke
+          </span>
+          <span
+            class="item-price"
+          >
+            £0.70
+          </span>
+        </span>
+      </li>
+      <li>
+        <span
+          class="item-total weight"
+        >
+          <span>
+            Oranges - 
+            <span
+              class="byWeight"
+            >
+              0.40kg @ £1.99/kg
+            </span>
+          </span>
+          <span
+            class="item-price"
+          >
+            £0.80
+          </span>
+        </span>
+      </li>
+    </ul>
+    <hr />
+    <p
+      class="sub-total"
+      data-testid="sub-total"
+    >
+      <span>
+        Sub total
+      </span>
+      <span>
+        £3.69
+      </span>
+    </p>
+    <button
+      class="btn-checkout"
+      data-testid="checkout"
+      type="button"
+    >
+      Checkout
+    </button>
+    <ul
+      class="total"
+    />
+  </div>
+</DocumentFragment>
+`;

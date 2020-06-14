@@ -80,7 +80,7 @@ const useActions = () => {
         ]
       });
     } else {
-      
+
       if (index > -1) {
         basketItems.splice(index, 1);
       }

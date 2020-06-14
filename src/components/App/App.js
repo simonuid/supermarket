@@ -1,10 +1,10 @@
 import React from 'react';
 import Basket from '../Basket';
 import Product from '../Product';
-import classes from './App.module.css';
+import Styled from './styled';
 
 const App = () => (
-  <div className={classes.container}>
+  <Styled>
     <Product
       id='item_beans'
       name="Beans"
@@ -30,7 +30,7 @@ const App = () => (
       weight={0}
     />
     <Basket />
-  </div>
+  </Styled>
 );
 
 export default App;

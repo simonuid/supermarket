@@ -3,7 +3,7 @@
 exports[`components > App renders without crashing 1`] = `
 <DocumentFragment>
   <div
-    class="container"
+    class="sc-AxiKw kYfILu"
   >
     <div
       class="sc-AxirZ hKwhGi"
@@ -130,7 +130,7 @@ exports[`components > App renders without crashing 1`] = `
             class="item-total"
           >
             <span>
-              item-test
+              test
             </span>
             <span
               class="item-price"
@@ -143,6 +143,7 @@ exports[`components > App renders without crashing 1`] = `
       <hr />
       <p
         class="sub-total"
+        data-testid="sub-total"
       >
         <span>
           Sub total
@@ -153,6 +154,7 @@ exports[`components > App renders without crashing 1`] = `
       </p>
       <button
         class="btn-checkout"
+        data-testid="checkout"
         type="button"
       >
         Checkout

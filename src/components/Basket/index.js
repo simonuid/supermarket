@@ -10,7 +10,8 @@ const Basket = () => {
   const { getTotal } = useActions();
   const hasDiscount = total.discount && total.discount.length > 0;
   
-  const subTotal = total.totalBeforeDiscount ? total.totalBeforeDiscount.toFixed(2) : '0.00';
+  const subTotal =
+    total.totalBeforeDiscount ? total.totalBeforeDiscount.toFixed(2) : '0.00';
 
   const totalSavings =
     total.discount && total.discount.length > 0 && total.discount.map(d => d.saved).reduce((ac, c) => ac + c, 0);
@@ -51,7 +52,7 @@ const Basket = () => {
       </ul>
 
       <hr/ >
-      <p className='sub-total'>
+      <p className='sub-total' data-testid='sub-total'>
         <span>Sub total</span>
         <span>{`£${subTotal}`}</span>
       </p>
@@ -60,6 +61,7 @@ const Basket = () => {
         type="button"
         onClick={getTotal}
         className='btn-checkout'
+        data-testid='checkout'
       >
         Checkout
       </button>

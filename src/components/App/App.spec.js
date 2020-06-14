@@ -16,7 +16,7 @@ describe('components > App', () => {
       },
       basketItems: [{
         id: 'id-test',
-        name: 'item-test',
+        name: 'test',
       }],
     }
   });
