@@ -10,7 +10,7 @@ const Basket = () => {
   const { getTotal } = useActions();
   const hasDiscount = total.discount && total.discount.length > 0;
   
-  const subTotal = total.totalBeforeDiscount && total.totalBeforeDiscount.toFixed(2);
+  const subTotal = total.totalBeforeDiscount ? total.totalBeforeDiscount.toFixed(2) : '0.00';
 
   const totalSavings =
     total.discount && total.discount.length > 0 && total.discount.map(d => d.saved).reduce((ac, c) => ac + c, 0);
@@ -43,33 +43,38 @@ const Basket = () => {
             <li key={uniqueId()}>
               <span className='item-total'>
                 <span>{i.name}</span>
-                <span className='item-price'>{`£${i.unitPrice.toFixed(2)}`}</span>
+                <span className='item-price'>{`£${i.unitPrice ? i.unitPrice.toFixed(2) : '0.00'}`}</span>
               </span>
             </li>  
           )
        })}
       </ul>
 
+      <hr/ >
+      <p className='sub-total'>
+        <span>Sub total</span>
+        <span>{`£${subTotal}`}</span>
+      </p>
+
+      <button
+        type="button"
+        onClick={getTotal}
+        className='btn-checkout'
+      >
+        Checkout
+      </button>
+
       {basketItems.length > 0 && (
         <>
-          <hr/ >
-          <p className='sub-total'>
-            <span>Sub total</span>
-            <span>{`£${subTotal}`}</span>
-          </p>
-
-          <button
-            type="button"
-            onClick={getTotal}
-            className='btn-checkout'
-          >
-            Checkout
-          </button>
-
           <ul className="total">
             {showTotal && (
               <>
-                {hasDiscount && <li className='title'>Savings</li>}
+                {hasDiscount && (
+                  <>
+                    <hr />
+                    <li className='title'>Savings</li>
+                  </>
+                )}
                 {total.discount.map(m => (
                   <li key={uniqueId()}>
                     <span className='item-total'>
@@ -89,9 +94,9 @@ const Basket = () => {
                       </span>
                     </span>
                   </li>
+                  <hr className='total-top' />
                   </>
                 )}
-                <hr className='total-top' />
                 <li>
                   <span className='item-total'>
                     <span>Total to Pay</span>

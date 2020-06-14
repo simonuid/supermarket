@@ -6,43 +6,160 @@ exports[`components > App renders without crashing 1`] = `
     class="container"
   >
     <div
-      class="counter"
+      class="sc-AxirZ hKwhGi"
     >
-      <h2
-        class="header"
+      <h4>
+        Beans
+      </h4>
+      <img
+        alt="Beans"
+        src="https://mysupermarket.s3-eu-west-1.amazonaws.com/beans.png"
+      />
+      <div
+        class="middle-div"
       >
-        Sync counter
-      </h2>
-      <button
-        class="button"
-        type="button"
+        <p
+          class="discount"
+        >
+          Get 3 for 2!
+        </p>
+      </div>
+      <p
+        class="unitPrice"
       >
-        Increment by one
-      </button>
-      <div>
-        Total value: 
-        <strong>
-          6
-        </strong>
+        £0.50/each
+      </p>
+      <div
+        class="bottom-div"
+      >
+        <button
+          type="button"
+        >
+          +
+        </button>
+        <button
+          type="button"
+        >
+          -
+        </button>
       </div>
     </div>
     <div
-      class="counter"
+      class="sc-AxirZ hKwhGi"
     >
-      <h2
-        class="header"
+      <h4>
+        Coke
+      </h4>
+      <img
+        alt="Coke"
+        src="https://mysupermarket.s3-eu-west-1.amazonaws.com/coke.jpg"
+      />
+      <div
+        class="middle-div"
       >
-        Async Random
+        <p
+          class="discount"
+        >
+          Get 2 for 1!
+        </p>
+      </div>
+      <p
+        class="unitPrice"
+      >
+        £0.70/each
+      </p>
+      <div
+        class="bottom-div"
+      >
+        <button
+          type="button"
+        >
+          +
+        </button>
+        <button
+          type="button"
+        >
+          -
+        </button>
+      </div>
+    </div>
+    <div
+      class="sc-AxirZ hKwhGi"
+    >
+      <h4>
+        Oranges
+      </h4>
+      <img
+        alt="Oranges"
+        src="https://mysupermarket.s3-eu-west-1.amazonaws.com/oranges.jpg"
+      />
+      <div
+        class="middle-div"
+      />
+      <p
+        class="unitPrice"
+      >
+        £1.99/kg
+      </p>
+      <div
+        class="bottom-div"
+      >
+        <button
+          type="button"
+        >
+          +
+        </button>
+        <button
+          type="button"
+        >
+          -
+        </button>
+      </div>
+    </div>
+    <div
+      class="sc-AxjAm cdEQCG"
+    >
+      <h2>
+        Basket
       </h2>
+      <ul
+        class="list"
+      >
+        <li>
+          <span
+            class="item-total"
+          >
+            <span>
+              item-test
+            </span>
+            <span
+              class="item-price"
+            >
+              £0.00
+            </span>
+          </span>
+        </li>
+      </ul>
+      <hr />
+      <p
+        class="sub-total"
+      >
+        <span>
+          Sub total
+        </span>
+        <span>
+          £0.00
+        </span>
+      </p>
       <button
-        class="button"
+        class="btn-checkout"
         type="button"
       >
-        Get random number
+        Checkout
       </button>
-      <div>
-        Click the button to get random number
-      </div>
+      <ul
+        class="total"
+      />
     </div>
   </div>
 </DocumentFragment>

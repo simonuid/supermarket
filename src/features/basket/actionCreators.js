@@ -18,16 +18,16 @@ const useActions = () => {
     return i.unitPrice;
   }).reduce((ac, c) => ac + c, 0);
 
-  // Add item action
+  /** Add item action */
   const addItem = useCallback((id, name, priceByItem, priceByWeight, unitPrice, promotion) => {
     const index = getIndex(id);
-    // If basket has this item and it's priceByWeight, increase the weight by 0.2kg
+    /** If basket has this item and it's priceByWeight, increase the weight by 0.2kg */
     if (priceByWeight && index > -1) {
       const item = basketItems[index];
       basketItems.splice(index, 1);
       dispatch({
         type: ADD_ITEM,
-        totalBeforeDiscount: subTotal + (unitPrice * (item.weight + 0.2)),
+        totalBeforeDiscount: subTotal + unitPrice * 0.2,
         showCheckout: false,
         basketItems: [
           ...basketItems,
@@ -58,10 +58,10 @@ const useActions = () => {
     }
   }, [basketItems, dispatch]);
 
-  // Remove item action
+  /** Remove item action */
   const removeItem = useCallback((id, priceByWeight, unitPrice) => {
     const index = getIndex(id);
-    // If basket has this item and it's priceByWeight, decrease the weight by 0.2kg
+    /** If basket has this item and it's priceByWeight, decrease the weight by 0.2kg */
     if (priceByWeight && index > -1) {
       const item = basketItems[index];
       const hasNoItem = item.weight.toFixed(2) <= 0;
@@ -69,7 +69,7 @@ const useActions = () => {
 
       dispatch({
         type: REMOVE_ITEM,
-        totalBeforeDiscount: hasNoItem ? 0 : subTotal - (unitPrice * 0.2),
+        totalBeforeDiscount: hasNoItem ? subTotal : (subTotal - (unitPrice * 0.2)).toFixed(2),
         showCheckout: false,
         basketItems:  [
           ...basketItems,
@@ -80,13 +80,13 @@ const useActions = () => {
         ]
       });
     } else {
-
+      
       if (index > -1) {
         basketItems.splice(index, 1);
       }
 
-      const hasQuantityItem = subTotal - unitPrice > 0 ? subTotal - unitPrice : 0;
-      const hasWeightItem = subTotal > 0 ? subTotal - (unitPrice * 0.2) : 0;
+      const hasQuantityItem = subTotal - unitPrice > 0 ? (subTotal - unitPrice).toFixed(2) : 0;
+      const hasWeightItem = subTotal > 0 ? (subTotal - (unitPrice * 0.2)) : 0;
   
       dispatch({
         type: REMOVE_ITEM,
@@ -97,7 +97,7 @@ const useActions = () => {
     }   
   }, [basketItems, dispatch]);
 
-  // Calculate total
+  /** Calculate total */
   const getTotal = useCallback(() => {
     const getSavings = () => {
       const counts = basketItems.map(item => item).reduce((acc, value) => ({
@@ -105,6 +105,11 @@ const useActions = () => {
         [value.id]: (acc[value.id] || 0) + 1
       }), {});
   
+      /** 
+       * If there are more items using the same type of discount, we can use an api to store
+       * and calculate the discount amount; here I just hardcode item_coke and item_beans as
+       * these are what we need in this task.
+       */
       const cokeSaved = counts.item_coke >= 2 ? (counts.item_coke / 2) : 0;
       const itemCoke = basketItems[getIndex('item_coke')];
       const discountCoke = cokeSaved > 0 ? {

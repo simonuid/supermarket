@@ -1,41 +1,91 @@
-import { INCREMENT_COUNTER } from './actionTypes';
+import { ADD_ITEM, REMOVE_ITEM } from './actionTypes';
 import BasketReducer from './BasketReducer';
 
-describe('features > counter > BasketReducer', () => {
+describe('features > basket > BasketReducer', () => {
   /**
-   * All test cases are very simple, since Redux
-   * reducers are pure functions
+   * All test cases are very simple, since Redux reducers are pure functions
    */
   it('returns initial state, if non matched action is dispatched', () => {
     const initialState = {
-      value: 0,
+      basketItems: [],
+      total: {},
+      showCheckout: false,
     };
-
     const action = {
       type: 'FOO',
     };
-
-    expect(CounterReducer(initialState, action)).toBe(initialState);
+    expect(BasketReducer(initialState, action)).toBe(initialState);
   });
 
-  it(`returns state with incremented value, if ${INCREMENT_COUNTER} action is dispatched`, () => {
+  it(`returns state with incremented value, if ${ADD_ITEM} action is dispatched`, () => {
     const initialState = {
-      value: 0,
+      basketItems: [],
+      total: {
+        totalBeforeDiscount: 0,
+      },
+      showCheckout: false,
     };
 
     /** State we expect after action dispatched */
     const expectedState = {
-      value: 1,
+      basketItems: [{
+        id: 'id_byItem',
+        name: 'byItem',
+        priceByItem: true,
+        priceByWeight: false,
+        unitPrice: 0.90,
+        promotion: true,
+        weight: null,
+      }],
+      showCheckout: false,
+      total: {
+        totalBeforeDiscount: 0.9,
+      },
     };
 
     const action = {
-      type: INCREMENT_COUNTER,
-      value: expectedState.value,
+      type: ADD_ITEM,
+      basketItems: expectedState.basketItems,
+      showCheckout: expectedState.showCheckout,
+      totalBeforeDiscount: expectedState.basketItems[0].unitPrice
     };
-    /**
-     * Use `toEqual` matcher instead of `toBe`,
-     * since latter assumes object equality
-     */
-    expect(CounterReducer(initialState, action)).toEqual(expectedState);
+
+    expect(BasketReducer(initialState, action)).toEqual(expectedState);
+  });
+
+  it(`returns state with decremented value, if ${REMOVE_ITEM} action is dispatched`, () => {
+    const initialState = {
+      basketItems: [{
+        id: 'id_byItem',
+        name: 'byItem',
+        priceByItem: true,
+        priceByWeight: false,
+        unitPrice: 0.90,
+        promotion: true,
+        weight: null,
+      }],
+      showCheckout: false,
+      total: {
+        totalBeforeDiscount: 0.9,
+      },
+    };
+
+    /** State we expect after action dispatched */
+    const expectedState = {
+      basketItems: [],
+      total: {
+        totalBeforeDiscount: 0,
+      },
+      showCheckout: false,
+    };
+
+    const action = {
+      type: REMOVE_ITEM,
+      basketItems: expectedState.basketItems,
+      showCheckout: expectedState.showCheckout,
+      totalBeforeDiscount: initialState.total.totalBeforeDiscount - initialState.basketItems[0].unitPrice
+    };
+
+    expect(BasketReducer(initialState, action)).toEqual(expectedState);
   });
 });
