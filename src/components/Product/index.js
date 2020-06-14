@@ -37,7 +37,7 @@ const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, weight, url,
 
         <button
           type="button"
-          onClick={() => removeItem(id, priceByWeight)}
+          onClick={() => removeItem(id, priceByWeight, unitPrice)}
         >
           -
         </button>

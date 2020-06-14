@@ -15,6 +15,8 @@ export default styled.div`
     list-style: none;
     padding-left: 0;
     > li {
+      padding-top: 5px;
+      padding-bottom: 5px;
       > .item-total {
         display: flex;
         justify-content: space-between;
@@ -23,23 +25,45 @@ export default styled.div`
           > .item-price {
             text-align: end;
           }
+          .byWeight {
+            font-size: 12px;
+          }
         }
         > .item-price {
           font-weight: 700;
         }
       }
     }
-    &.savings {
+    &.total {
       margin-top: 20px;
-      border-top: 1px solid darkkhaki;
       padding-top: 10px;
+      > li.title {
+        font-weight: 600;
+        margin: 10px auto;
+      }
     }
   }
-  > hr {
+  hr {
     border-style: dashed;
+    &.savings-bottom {
+      width: 50%;
+      margin: 15px auto 15px 0;
+    }
+    &.total-top {
+      border-style: solid;
+      color: darkkhaki;
+      margin: 20px auto;
+    }
   }
   > .sub-total {
     display: flex;
     justify-content: space-between;
+  }
+  > .btn-checkout {
+    color: white;
+    border-radius: 4px;
+    border: none;
+    padding: 10px 20px;
+    background-color: cornflowerblue;
   }
 `;

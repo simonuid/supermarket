@@ -1,7 +1,9 @@
-import { ADD_ITEM, REMOVE_ITEM } from './actionTypes';
+import { ADD_ITEM, GET_TOTAL, REMOVE_ITEM } from './actionTypes';
 
 const initialState = {
-  basketItems: []
+  basketItems: [],
+  total: {},
+  showCheckout: false,
 };
 
 export default (state = initialState, action) => {
@@ -9,11 +11,28 @@ export default (state = initialState, action) => {
     case ADD_ITEM:
       return { 
         ...state,
-        basketItems: action.payload
+        basketItems: action.basketItems,
+        showCheckout: action.showCheckout,
+        total: {
+          ...state.total,
+          totalBeforeDiscount: action.totalBeforeDiscount,
+        }
       };
     case REMOVE_ITEM:
-      return { 
-        basketItems: action.payload
+      return {
+        ...state,
+        basketItems: action.basketItems,
+        showCheckout: action.showCheckout,
+        total: {
+          ...state.total,
+          totalBeforeDiscount: action.totalBeforeDiscount,
+        }
+      };
+    case GET_TOTAL:
+      return {
+        ...state,
+        total: action.payload,
+        showCheckout: action.showCheckout,
       };
     default:
       return state;

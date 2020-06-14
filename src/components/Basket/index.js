@@ -1,45 +1,19 @@
-import React from 'react';
-import { sumBy } from 'lodash';
-import { useActions, useBasketValue } from '../../features/basket';
+import React, { useState, useCallback }  from 'react';
+import { uniqueId } from 'lodash';
+import { useActions, useTotalValue, useBasketValue, useShowCheckoutValue } from '../../features/basket';
 import Styled from './styled';
 
 const Basket = () => {
+  const total = useTotalValue();
   const basketItems = useBasketValue();
+  const showTotal = useShowCheckoutValue();
+  const { getTotal } = useActions();
+  const hasDiscount = total.discount && total.discount.length > 0;
+  
+  const subTotal = total.totalBeforeDiscount && total.totalBeforeDiscount.toFixed(2);
 
-  const subTotal = basketItems.map(i => {
-    if (i.priceByWeight) {
-      return (i.unitPrice * i.weight);
-    }
-    return i.unitPrice;
-  }).reduce((ac, c) => ac + c, 0);
-
-  const getIndex = id => basketItems
-    .map(i => i)
-    .findIndex((f => f.id === id));
-
-  const getSavings = () => {
-
-    const counts = basketItems.map(item => item).reduce((acc, value) => ({
-      ...acc,
-      [value.id]: (acc[value.id] || 0) + 1
-    }), {});
-
-    const cokeSaved = counts.item_coke >= 2 ? (counts.item_coke / 2) : 0;
-    const itemCoke = basketItems[getIndex('item_coke')];
-    const discountCoke = [{
-      name: itemCoke && itemCoke.promotion,
-      saved: itemCoke && (itemCoke.unitPrice * Math.floor(cokeSaved))
-    }];
-
-    const beansSaved = counts.item_beans >= 3 ? (counts.item_beans / 3) : 0;
-    const itemBeans = basketItems[getIndex('item_beans')];
-    const discountBeans = [{
-      name: itemBeans && itemBeans.name,
-      saved: itemBeans && (itemBeans.unitPrice * Math.floor(beansSaved))
-    }];
-
-    return discountCoke.concat(discountBeans);
-  }
+  const totalSavings =
+    total.discount && total.discount.length > 0 && total.discount.map(d => d.saved).reduce((ac, c) => ac + c, 0);
 
   return (
     <Styled>
@@ -48,19 +22,19 @@ const Basket = () => {
         {basketItems.map(i => {
           if (i.priceByWeight) {
             return (
-              <li>
+              <li key={uniqueId()}>
                 <span className='item-total weight'>
                   <span>
-                    {i.weight.toFixed(2)}kg @ £{i.unitPrice}/kg
+                    {i.name} - <span className='byWeight'>{i.weight.toFixed(2)}kg @ £{i.unitPrice}/kg</span>
                   </span>
                   <span className='item-price'>
-                    {`£${i.weight.toFixed(2) * i.unitPrice}`}
+                    {`£${(i.weight * i.unitPrice).toFixed(2)}`}
                   </span>
                 </span>
               </li>
             )}
           return (
-            <li>
+            <li key={uniqueId()}>
               <span className='item-total'>
                 <span>{i.name}</span>
                 <span className='item-price'>{`£${i.unitPrice}`}</span>
@@ -74,24 +48,58 @@ const Basket = () => {
           <hr/ >
           <p className='sub-total'>
             <span>Sub-total</span>
-            <span>{`£${subTotal.toFixed(2)}`}</span>
+            <span>{`£${subTotal}`}</span>
           </p>
-          {getSavings().length > 0 && (
-            <ul className="savings">
-              <li>Savings</li>
-              {getSavings().map(m => (
-                <>
-                  <li>{m.name}</li>
-                  <li>{m.saved}</li>
-                </>
-              ))}
-            </ul>
-          )}
-          
+
+          <button
+            type="button"
+            onClick={getTotal}
+            className='btn-checkout'
+          >
+            Checkout
+          </button>
+
+          <ul className="total">
+            {showTotal && (
+              <>
+                {hasDiscount && <li className='title'>Savings</li>}
+                {total.discount.map(m => (
+                  <li>
+                    <span className='item-total'>
+                      <span>{m.name}</span>
+                      <span className='item-price'>-£{m.saved}</span>
+                    </span>
+                  </li>
+                ))}
+                {hasDiscount && (
+                  <>
+                  <hr className='savings-bottom' />
+                  <li>
+                    <span className='item-total'>
+                      <span>Total savings</span>
+                      <span className='item-price'>
+                        -£{totalSavings}
+                      </span>
+                    </span>
+                  </li>
+                  </>
+                )}
+                <hr className='total-top' />
+                <li>
+                  <span className='item-total'>
+                    <span>Total to Pay</span>
+                    <span className='item-price'>
+                      £{total.totalFinal}
+                    </span>
+                  </span>
+                </li>
+              </>
+            )}
+
+            
+          </ul>
         </>
       )}
-
-      {console.log(getSavings(), ">>getSavings")}
     </Styled>
   );
 };

@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 
 const useBasketValue = () => useSelector(state => state.checkout.basketItems);
+const useTotalValue = () => useSelector(state => state.checkout.total);
+const useShowCheckoutValue = () => useSelector(state => state.checkout.showCheckout);
 
-export default useBasketValue;
+export { useBasketValue, useTotalValue, useShowCheckoutValue };

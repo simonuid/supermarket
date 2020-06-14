@@ -1,6 +1,4 @@
 import React from 'react';
-import Counter from '../Counter';
-import Random from '../Random';
 import Basket from '../Basket';
 import Product from '../Product';
 import classes from './App.module.css';

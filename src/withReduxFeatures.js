@@ -1,8 +1,6 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import promise from 'redux-promise-middleware';
-import { CounterReducer } from './features/counter';
-import { RandomReducer } from './features/random';
 import { BasketReducer } from './features/basket';
 import withProvider from './withProvider';
 
@@ -11,8 +9,6 @@ import withProvider from './withProvider';
  * all features of the application
  */
 const rootReducer = combineReducers({
-  count: CounterReducer,
-  random: RandomReducer,
   checkout: BasketReducer,
 });
 

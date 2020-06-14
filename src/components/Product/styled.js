@@ -5,6 +5,7 @@ export default styled.div`
   border-radius: 5px;
   margin: 36px 24px;
   width: 240px;
+  height: 350px;
   > h4 {
     font-size: 20px;
     font-weight: normal;
