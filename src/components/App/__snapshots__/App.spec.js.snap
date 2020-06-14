@@ -6,7 +6,7 @@ exports[`components > App renders without crashing 1`] = `
     class="sc-AxiKw kYfILu"
   >
     <div
-      class="sc-AxirZ hKwhGi"
+      class="sc-AxirZ eEXMRC"
     >
       <h4>
         Beans
@@ -20,6 +20,7 @@ exports[`components > App renders without crashing 1`] = `
       >
         <p
           class="discount"
+          data-testid="promotion"
         >
           Get 3 for 2!
         </p>
@@ -33,11 +34,13 @@ exports[`components > App renders without crashing 1`] = `
         class="bottom-div"
       >
         <button
+          data-testid="btn-add"
           type="button"
         >
           +
         </button>
         <button
+          data-testid="btn-remove"
           type="button"
         >
           -
@@ -45,7 +48,7 @@ exports[`components > App renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="sc-AxirZ hKwhGi"
+      class="sc-AxirZ eEXMRC"
     >
       <h4>
         Coke
@@ -59,6 +62,7 @@ exports[`components > App renders without crashing 1`] = `
       >
         <p
           class="discount"
+          data-testid="promotion"
         >
           Get 2 for 1!
         </p>
@@ -72,11 +76,13 @@ exports[`components > App renders without crashing 1`] = `
         class="bottom-div"
       >
         <button
+          data-testid="btn-add"
           type="button"
         >
           +
         </button>
         <button
+          data-testid="btn-remove"
           type="button"
         >
           -
@@ -84,7 +90,7 @@ exports[`components > App renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="sc-AxirZ hKwhGi"
+      class="sc-AxirZ eEXMRC"
     >
       <h4>
         Oranges
@@ -105,11 +111,13 @@ exports[`components > App renders without crashing 1`] = `
         class="bottom-div"
       >
         <button
+          data-testid="btn-add"
           type="button"
         >
           +
         </button>
         <button
+          data-testid="btn-remove"
           type="button"
         >
           -

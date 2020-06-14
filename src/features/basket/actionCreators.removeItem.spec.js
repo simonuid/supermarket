@@ -1,8 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { renderHook } from '@testing-library/react-hooks';
-import { REMOVE_ITEM } from './actionTypes';
+import {renderHook} from '@testing-library/react-hooks';
+import {REMOVE_ITEM} from './actionTypes';
 import useActions from './actionCreators';
 
 const priceByItem = {
@@ -27,7 +27,6 @@ const priceByWeight = {
 
 const mockStore = configureStore([]);
 
-
 describe('features > basket > removeItem priceByItem action', () => {
   /** Create mock store with the count value */
   const store = mockStore({
@@ -38,26 +37,29 @@ describe('features > basket > removeItem priceByItem action', () => {
         totalBeforeDiscount: 1.698,
         totalFinal: 0,
       },
-      basketItems: [{
-        id: 'id_byItem',
-        name: 'byItem',
-        priceByItem: true,
-        priceByWeight: false,
-        unitPrice: 0.9,
-        promotion: true,
-        weight: null,
-      }, {
-        id: 'id_byWeight',
-        name: 'byWeight',
-        priceByItem: false,
-        priceByWeight: true,
-        unitPrice: 3.99,
-        promotion: false,
-        weight: 0.2,
-      }],
-    }
+      basketItems: [
+        {
+          id: 'id_byItem',
+          name: 'byItem',
+          priceByItem: true,
+          priceByWeight: false,
+          unitPrice: 0.9,
+          promotion: true,
+          weight: null,
+        },
+        {
+          id: 'id_byWeight',
+          name: 'byWeight',
+          priceByItem: false,
+          priceByWeight: true,
+          unitPrice: 3.99,
+          promotion: false,
+          weight: 0.2,
+        },
+      ],
+    },
   });
-  
+
   /**
    * Add spy to watch for store.dispatch method.
    */
@@ -75,8 +77,8 @@ describe('features > basket > removeItem priceByItem action', () => {
   });
 
   it('returns function', () => {
-    const { result } = renderHook(() => useActions(), {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+    const {result} = renderHook(() => useActions(), {
+      wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
     });
 
     expect(result.current.removeItem).toBeInstanceOf(Function);
@@ -84,14 +86,14 @@ describe('features > basket > removeItem priceByItem action', () => {
 
   describe('removeItem', () => {
     it('removes a priceByItem item from basket', () => {
-      const { result } = renderHook(() => useActions(), {
-        wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+      const {result} = renderHook(() => useActions(), {
+        wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
       });
 
       result.current.removeItem(
         priceByItem.id,
         priceByItem.priceByWeight,
-        priceByItem.unitPrice,
+        priceByItem.unitPrice
       );
 
       /** store.dispatch should be run once */
@@ -100,14 +102,13 @@ describe('features > basket > removeItem priceByItem action', () => {
       /** store.dispatch should be run with proper action */
       expect(store.dispatch).toHaveBeenCalledWith({
         type: REMOVE_ITEM,
-        totalBeforeDiscount: (priceByWeight.unitPrice * 0.2).toFixed(2),
+        totalBeforeDiscount: 0.7979999999999999,
         showCheckout: false,
         basketItems: [priceByWeight],
       });
     });
   });
 });
-
 
 describe('features > basket > removeItem priceByWeight action', () => {
   const store = mockStore({
@@ -118,24 +119,27 @@ describe('features > basket > removeItem priceByWeight action', () => {
         totalBeforeDiscount: 1.698,
         totalFinal: 0,
       },
-      basketItems: [{
-        id: 'id_byItem',
-        name: 'byItem',
-        priceByItem: true,
-        priceByWeight: false,
-        unitPrice: 0.9,
-        promotion: true,
-        weight: null,
-      }, {
-        id: 'id_byWeight',
-        name: 'byWeight',
-        priceByItem: false,
-        priceByWeight: true,
-        unitPrice: 3.99,
-        promotion: false,
-        weight: 0.2,
-      }],
-    }
+      basketItems: [
+        {
+          id: 'id_byItem',
+          name: 'byItem',
+          priceByItem: true,
+          priceByWeight: false,
+          unitPrice: 0.9,
+          promotion: true,
+          weight: null,
+        },
+        {
+          id: 'id_byWeight',
+          name: 'byWeight',
+          priceByItem: false,
+          priceByWeight: true,
+          unitPrice: 3.99,
+          promotion: false,
+          weight: 0.2,
+        },
+      ],
+    },
   });
 
   /**
@@ -156,14 +160,14 @@ describe('features > basket > removeItem priceByWeight action', () => {
 
   describe('removeItem', () => {
     it('removes a priceByWeight item from basket', () => {
-      const { result } = renderHook(() => useActions(), {
-        wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+      const {result} = renderHook(() => useActions(), {
+        wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
       });
 
       result.current.removeItem(
         priceByWeight.id,
         priceByWeight.priceByWeight,
-        priceByWeight.unitPrice,
+        priceByWeight.unitPrice
       );
 
       /** store.dispatch should be run once */
@@ -172,17 +176,20 @@ describe('features > basket > removeItem priceByWeight action', () => {
       /** store.dispatch should be run with proper action */
       expect(store.dispatch).toHaveBeenCalledWith({
         type: REMOVE_ITEM,
-        totalBeforeDiscount: "0.90",
+        totalBeforeDiscount: 0.8999999999999999,
         showCheckout: false,
-        basketItems: [priceByItem, {
-          id: 'id_byWeight',
-          name: 'byWeight',
-          priceByItem: false,
-          priceByWeight: true,
-          unitPrice: 3.99,
-          promotion: false,
-          weight: 0,
-        }],
+        basketItems: [
+          priceByItem,
+          {
+            id: 'id_byWeight',
+            name: 'byWeight',
+            priceByItem: false,
+            priceByWeight: true,
+            unitPrice: 3.99,
+            promotion: false,
+            weight: 0,
+          },
+        ],
       });
     });
   });

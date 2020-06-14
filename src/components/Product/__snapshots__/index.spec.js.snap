@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components > Product renders without crashing 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-AxjAm hPTBmF"
+  >
+    <h4>
+      test
+    </h4>
+    <img
+      alt="test"
+      src=""
+    />
+    <div
+      class="middle-div"
+    >
+      <p
+        class="discount"
+        data-testid="promotion"
+      >
+        Get 3 for 2!
+      </p>
+    </div>
+    <p
+      class="unitPrice"
+    >
+      £0.50/each
+    </p>
+    <div
+      class="bottom-div"
+    >
+      <button
+        data-testid="btn-add"
+        type="button"
+      >
+        +
+      </button>
+      <button
+        data-testid="btn-remove"
+        type="button"
+      >
+        -
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

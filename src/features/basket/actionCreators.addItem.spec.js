@@ -1,8 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { renderHook } from '@testing-library/react-hooks';
-import { ADD_ITEM } from './actionTypes';
+import {renderHook} from '@testing-library/react-hooks';
+import {ADD_ITEM} from './actionTypes';
 import useActions from './actionCreators';
 
 describe('features > basket > addItem action', () => {
@@ -17,7 +17,7 @@ describe('features > basket > addItem action', () => {
         totalFinal: 0,
       },
       basketItems: [],
-    }
+    },
   });
 
   const priceByItem = {
@@ -57,8 +57,8 @@ describe('features > basket > addItem action', () => {
   });
 
   it('returns function', () => {
-    const { result } = renderHook(() => useActions(), {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+    const {result} = renderHook(() => useActions(), {
+      wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
     });
 
     expect(result.current.addItem).toBeInstanceOf(Function);
@@ -66,8 +66,8 @@ describe('features > basket > addItem action', () => {
 
   describe('addItem', () => {
     it('adds a priceByItem item to basket', () => {
-      const { result } = renderHook(() => useActions(), {
-        wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+      const {result} = renderHook(() => useActions(), {
+        wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
       });
 
       result.current.addItem(
@@ -76,7 +76,7 @@ describe('features > basket > addItem action', () => {
         priceByItem.priceByItem,
         priceByItem.priceByWeight,
         priceByItem.unitPrice,
-        priceByItem.promotion,
+        priceByItem.promotion
       );
 
       /** store.dispatch should be run once */
@@ -92,8 +92,8 @@ describe('features > basket > addItem action', () => {
     });
 
     it('adds a priceByWeight item to basket', () => {
-      const { result } = renderHook(() => useActions(), {
-        wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+      const {result} = renderHook(() => useActions(), {
+        wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
       });
 
       result.current.addItem(

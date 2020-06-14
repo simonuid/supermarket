@@ -1,8 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { render, fireEvent } from '@testing-library/react';
+import {Provider} from 'react-redux';
+import {render, fireEvent} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
-import { GET_TOTAL } from 'features/basket/actionTypes';
+import {GET_TOTAL} from 'features/basket/actionTypes';
 import Basket from './index';
 
 describe('components > Basket', () => {
@@ -11,15 +11,18 @@ describe('components > Basket', () => {
   const store = mockStore({
     checkout: {
       total: {
-        discount: [{
-          name: 'Get 2 for 1!',
-          saved: 0.7
-        },{
-          name: 'Get 3 for 2!',
-          saved: 0.5
-        }],
+        discount: [
+          {
+            name: 'Get 2 for 1!',
+            saved: 0.7,
+          },
+          {
+            name: 'Get 3 for 2!',
+            saved: 0.5,
+          },
+        ],
         totalBeforeDiscount: 3.69,
-        totalFinal: "2.50"
+        totalFinal: '2.50',
       },
       basketItems: [
         {
@@ -27,43 +30,43 @@ describe('components > Basket', () => {
           name: 'Beans',
           promotion: 'Get 3 for 2!',
           unitPrice: 0.5,
-          priceByItem: true
+          priceByItem: true,
         },
         {
           id: 'item_beans',
           name: 'Beans',
           promotion: 'Get 3 for 2!',
           unitPrice: 0.5,
-          priceByItem: true
+          priceByItem: true,
         },
         {
           id: 'item_beans',
           name: 'Beans',
           promotion: 'Get 3 for 2!',
           unitPrice: 0.5,
-          priceByItem: true
+          priceByItem: true,
         },
         {
           id: 'item_coke',
           name: 'Coke',
           promotion: 'Get 2 for 1!',
           unitPrice: 0.7,
-          priceByItem: true
+          priceByItem: true,
         },
         {
           id: 'item_coke',
           name: 'Coke',
           promotion: 'Get 2 for 1!',
           unitPrice: 0.7,
-          priceByItem: true
+          priceByItem: true,
         },
         {
           id: 'item_orange',
           name: 'Oranges',
           unitPrice: 1.99,
           priceByWeight: true,
-          weight: 0.4
-        }
+          weight: 0.4,
+        },
       ],
     },
   });
@@ -75,8 +78,8 @@ describe('components > Basket', () => {
   });
 
   it('renders without crashing', () => {
-    const { asFragment, getByTestId } = render(<Basket />, {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+    const {asFragment, getByTestId} = render(<Basket />, {
+      wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
     });
 
     expect(asFragment()).toMatchSnapshot();
@@ -85,8 +88,8 @@ describe('components > Basket', () => {
   });
 
   it('dispatches an action on button click', () => {
-    const { getByTestId } = render(<Basket />, {
-      wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
+    const {getByTestId} = render(<Basket />, {
+      wrapper: ({children}) => <Provider store={store}>{children}</Provider>,
     });
     fireEvent.click(getByTestId('checkout'));
 
@@ -97,15 +100,18 @@ describe('components > Basket', () => {
     expect(store.dispatch).toHaveBeenCalledWith({
       type: GET_TOTAL,
       payload: {
-        discount: [{
-          name: 'Get 2 for 1!',
-          saved: 0.7
-        },{
-          name: 'Get 3 for 2!',
-          saved: 0.5
-        }],
+        discount: [
+          {
+            name: 'Get 2 for 1!',
+            saved: 0.7,
+          },
+          {
+            name: 'Get 3 for 2!',
+            saved: 0.5,
+          },
+        ],
         totalBeforeDiscount: 3.6960000000000006,
-        totalFinal: "2.50",
+        totalFinal: '2.50',
       },
       showCheckout: true,
     });

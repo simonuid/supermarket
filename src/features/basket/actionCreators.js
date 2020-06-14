@@ -1,135 +1,160 @@
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { useBasketValue } from './selectors';
-import { REMOVE_ITEM, ADD_ITEM, GET_TOTAL } from './actionTypes';
+import {useCallback} from 'react';
+import {useDispatch} from 'react-redux';
+import {useBasketValue} from './selectors';
+import {REMOVE_ITEM, ADD_ITEM, GET_TOTAL} from './actionTypes';
 
 const useActions = () => {
   const dispatch = useDispatch();
   const basketItems = useBasketValue();
 
-  const getIndex = id => basketItems
-    .map(i => i)
-    .findIndex((f => f.id === id));
+  const getIndex = useCallback(id =>
+    basketItems.map(i => i).findIndex(f => f.id === id)
+  );
 
-  const subTotal = basketItems.map(i => {
-    if (i.priceByWeight) {
-      return (i.unitPrice * i.weight);
-    }
-    return i.unitPrice;
-  }).reduce((ac, c) => ac + c, 0);
+  const subTotal = basketItems
+    .map(i => {
+      if (i.priceByWeight) {
+        return i.unitPrice * i.weight;
+      }
+      return i.unitPrice;
+    })
+    .reduce((ac, c) => ac + c, 0);
 
   /** Add item action */
-  const addItem = useCallback((id, name, priceByItem, priceByWeight, unitPrice, promotion) => {
-    const index = getIndex(id);
-    /** If basket has this item and it's priceByWeight, increase the weight by 0.2kg */
-    if (priceByWeight && index > -1) {
-      const item = basketItems[index];
-      basketItems.splice(index, 1);
-      dispatch({
-        type: ADD_ITEM,
-        totalBeforeDiscount: subTotal + unitPrice * 0.2,
-        showCheckout: false,
-        basketItems: [
-          ...basketItems,
-          {
-            ...item,
-            weight: item.weight += 0.2
-          }
-        ]
-      });
-    } else {
-      dispatch({
-        type: ADD_ITEM,
-        totalBeforeDiscount: priceByWeight ? (subTotal + (unitPrice * 0.2)) : (subTotal + unitPrice),
-        showCheckout: false,
-        basketItems: [
-          ...basketItems,
-          {
-            id,
-            name,
-            priceByItem,
-            priceByWeight,
-            unitPrice,
-            promotion,
-            weight: priceByWeight ? 0.2 : null,
-          }
-        ]
-      });
-    }
-  }, [basketItems, dispatch]);
+  const addItem = useCallback(
+    (id, name, priceByItem, priceByWeight, unitPrice, promotion) => {
+      const index = getIndex(id);
+      /** If basket has this item and it's priceByWeight, increase the weight by 0.2kg */
+      if (priceByWeight && index > -1) {
+        const item = basketItems[index];
+        basketItems.splice(index, 1);
+        dispatch({
+          type: ADD_ITEM,
+          totalBeforeDiscount: subTotal + unitPrice * 0.2,
+          showCheckout: false,
+          basketItems: [
+            ...basketItems,
+            {
+              ...item,
+              weight: (item.weight += 0.2),
+            },
+          ],
+        });
+      } else {
+        dispatch({
+          type: ADD_ITEM,
+          totalBeforeDiscount: priceByWeight
+            ? subTotal + unitPrice * 0.2
+            : subTotal + unitPrice,
+          showCheckout: false,
+          basketItems: [
+            ...basketItems,
+            {
+              id,
+              name,
+              priceByItem,
+              priceByWeight,
+              unitPrice,
+              promotion,
+              weight: priceByWeight ? 0.2 : null,
+            },
+          ],
+        });
+      }
+    },
+    [basketItems, dispatch, getIndex, subTotal]
+  );
 
   /** Remove item action */
-  const removeItem = useCallback((id, priceByWeight, unitPrice) => {
-    const index = getIndex(id);
-    /** If basket has this item and it's priceByWeight, decrease the weight by 0.2kg */
-    if (priceByWeight && index > -1) {
-      const item = basketItems[index];
-      const hasNoItem = item.weight.toFixed(2) <= 0;
-      basketItems.splice(index, 1);
-
-      dispatch({
-        type: REMOVE_ITEM,
-        totalBeforeDiscount: hasNoItem ? subTotal : (subTotal - (unitPrice * 0.2)).toFixed(2),
-        showCheckout: false,
-        basketItems:  [
-          ...basketItems,
-          {
-            ...item,
-            weight: hasNoItem ? 0 : item.weight -= 0.2
-          }
-        ]
-      });
-    } else {
-
-      if (index > -1) {
+  const removeItem = useCallback(
+    (id, priceByWeight, unitPrice) => {
+      const index = getIndex(id);
+      /** If basket has this item and it's priceByWeight, decrease the weight by 0.2kg */
+      if (priceByWeight && index > -1) {
+        const item = basketItems[index];
+        const hasNoItem = item.weight.toFixed(2) <= 0;
         basketItems.splice(index, 1);
-      }
 
-      const hasQuantityItem = subTotal - unitPrice > 0 ? (subTotal - unitPrice).toFixed(2) : 0;
-      const hasWeightItem = subTotal > 0 ? (subTotal - (unitPrice * 0.2)) : 0;
-  
-      dispatch({
-        type: REMOVE_ITEM,
-        showCheckout: false,
-        totalBeforeDiscount: priceByWeight ? hasWeightItem : hasQuantityItem,
-        basketItems: [...basketItems],
-      });
-    }   
-  }, [basketItems, dispatch]);
+        dispatch({
+          type: REMOVE_ITEM,
+          totalBeforeDiscount: hasNoItem
+            ? subTotal
+            : subTotal - unitPrice * 0.2,
+          showCheckout: false,
+          basketItems: [
+            ...basketItems,
+            {
+              ...item,
+              weight: hasNoItem ? 0 : (item.weight -= 0.2),
+            },
+          ],
+        });
+      } else {
+        if (index > -1) {
+          basketItems.splice(index, 1);
+        }
+
+        const hasQuantityItem =
+          subTotal - unitPrice > 0 ? subTotal - unitPrice : 0;
+        const hasWeightItem = subTotal > 0 ? subTotal - unitPrice * 0.2 : 0;
+
+        dispatch({
+          type: REMOVE_ITEM,
+          showCheckout: false,
+          totalBeforeDiscount: priceByWeight ? hasWeightItem : hasQuantityItem,
+          basketItems: [...basketItems],
+        });
+      }
+    },
+    [basketItems, dispatch, getIndex, subTotal]
+  );
 
   /** Calculate total */
   const getTotal = useCallback(() => {
     const getSavings = () => {
-      const counts = basketItems.map(item => item).reduce((acc, value) => ({
-        ...acc,
-        [value.id]: (acc[value.id] || 0) + 1
-      }), {});
-  
-      /** 
+      const counts = basketItems
+        .map(item => item)
+        .reduce(
+          (acc, value) => ({
+            ...acc,
+            [value.id]: (acc[value.id] || 0) + 1,
+          }),
+          {}
+        );
+
+      /**
        * If there are more items using the same type of discount, we can use an api to store
        * and calculate the discount amount; here I just hardcode item_coke and item_beans as
        * these are what we need in this task.
        */
-      const cokeSaved = counts.item_coke >= 2 ? (counts.item_coke / 2) : 0;
+      const cokeSaved = counts.item_coke >= 2 ? counts.item_coke / 2 : 0;
       const itemCoke = basketItems[getIndex('item_coke')];
-      const discountCoke = cokeSaved > 0 ? {
-        name: itemCoke && itemCoke.promotion,
-        saved: itemCoke && (itemCoke.unitPrice * Math.floor(cokeSaved))
-      } : null;
-  
-      const beansSaved = counts.item_beans >= 3 ? (counts.item_beans / 3) : 0;
+      const discountCoke =
+        cokeSaved > 0
+          ? {
+              name: itemCoke && itemCoke.promotion,
+              saved: itemCoke && itemCoke.unitPrice * Math.floor(cokeSaved),
+            }
+          : null;
+
+      const beansSaved = counts.item_beans >= 3 ? counts.item_beans / 3 : 0;
       const itemBeans = basketItems[getIndex('item_beans')];
-      const discountBeans = beansSaved > 0 ? {
-        name: itemBeans && itemBeans.promotion,
-        saved: itemBeans && (itemBeans.unitPrice * Math.floor(beansSaved))
-      } : null;
+      const discountBeans =
+        beansSaved > 0
+          ? {
+              name: itemBeans && itemBeans.promotion,
+              saved: itemBeans && itemBeans.unitPrice * Math.floor(beansSaved),
+            }
+          : null;
 
-      const discountItems = [discountCoke, discountBeans].filter(i => i)
-  
+      const discountItems = [discountCoke, discountBeans].filter(i => i);
+
       return discountItems;
-    }
+    };
 
-    const totalSaved = getSavings().map(s => s.saved).reduce((ac, c) => ac + c, 0);
+    const totalSaved = getSavings()
+      .map(s => s.saved)
+      .reduce((ac, c) => ac + c, 0);
 
     dispatch({
       type: GET_TOTAL,
@@ -140,10 +165,9 @@ const useActions = () => {
       },
       showCheckout: true,
     });
+  }, [basketItems, dispatch, getIndex, subTotal]);
 
-  }, [basketItems, dispatch])
-
-  return { addItem, removeItem, getTotal };
+  return {addItem, removeItem, getTotal};
 };
 
 export default useActions;

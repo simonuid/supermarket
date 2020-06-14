@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM } from './actionTypes';
+import {ADD_ITEM, REMOVE_ITEM} from './actionTypes';
 import BasketReducer from './BasketReducer';
 
 describe('features > basket > BasketReducer', () => {
@@ -28,15 +28,17 @@ describe('features > basket > BasketReducer', () => {
 
     /** State we expect after action dispatched */
     const expectedState = {
-      basketItems: [{
-        id: 'id_byItem',
-        name: 'byItem',
-        priceByItem: true,
-        priceByWeight: false,
-        unitPrice: 0.90,
-        promotion: true,
-        weight: null,
-      }],
+      basketItems: [
+        {
+          id: 'id_byItem',
+          name: 'byItem',
+          priceByItem: true,
+          priceByWeight: false,
+          unitPrice: 0.9,
+          promotion: true,
+          weight: null,
+        },
+      ],
       showCheckout: false,
       total: {
         totalBeforeDiscount: 0.9,
@@ -47,7 +49,7 @@ describe('features > basket > BasketReducer', () => {
       type: ADD_ITEM,
       basketItems: expectedState.basketItems,
       showCheckout: expectedState.showCheckout,
-      totalBeforeDiscount: expectedState.basketItems[0].unitPrice
+      totalBeforeDiscount: expectedState.basketItems[0].unitPrice,
     };
 
     expect(BasketReducer(initialState, action)).toEqual(expectedState);
@@ -55,15 +57,17 @@ describe('features > basket > BasketReducer', () => {
 
   it(`returns state with decremented value, if ${REMOVE_ITEM} action is dispatched`, () => {
     const initialState = {
-      basketItems: [{
-        id: 'id_byItem',
-        name: 'byItem',
-        priceByItem: true,
-        priceByWeight: false,
-        unitPrice: 0.90,
-        promotion: true,
-        weight: null,
-      }],
+      basketItems: [
+        {
+          id: 'id_byItem',
+          name: 'byItem',
+          priceByItem: true,
+          priceByWeight: false,
+          unitPrice: 0.9,
+          promotion: true,
+          weight: null,
+        },
+      ],
       showCheckout: false,
       total: {
         totalBeforeDiscount: 0.9,
@@ -83,7 +87,9 @@ describe('features > basket > BasketReducer', () => {
       type: REMOVE_ITEM,
       basketItems: expectedState.basketItems,
       showCheckout: expectedState.showCheckout,
-      totalBeforeDiscount: initialState.total.totalBeforeDiscount - initialState.basketItems[0].unitPrice
+      totalBeforeDiscount:
+        initialState.total.totalBeforeDiscount -
+        initialState.basketItems[0].unitPrice,
     };
 
     expect(BasketReducer(initialState, action)).toEqual(expectedState);

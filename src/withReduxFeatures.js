@@ -1,7 +1,7 @@
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
+import {combineReducers, createStore, applyMiddleware, compose} from 'redux';
+import {Provider} from 'react-redux';
 import promise from 'redux-promise-middleware';
-import { BasketReducer } from './features/basket';
+import {BasketReducer} from './features/basket';
 import withProvider from './withProvider';
 
 /**

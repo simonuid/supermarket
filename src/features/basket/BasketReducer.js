@@ -1,4 +1,4 @@
-import { ADD_ITEM, GET_TOTAL, REMOVE_ITEM } from './actionTypes';
+import {ADD_ITEM, GET_TOTAL, REMOVE_ITEM} from './actionTypes';
 
 const initialState = {
   basketItems: [],
@@ -9,14 +9,14 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM:
-      return { 
+      return {
         ...state,
         basketItems: action.basketItems,
         showCheckout: action.showCheckout,
         total: {
           ...state.total,
           totalBeforeDiscount: action.totalBeforeDiscount,
-        }
+        },
       };
     case REMOVE_ITEM:
       return {
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
         total: {
           ...state.total,
           totalBeforeDiscount: action.totalBeforeDiscount,
-        }
+        },
       };
     case GET_TOTAL:
       return {

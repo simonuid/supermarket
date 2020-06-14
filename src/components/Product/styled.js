@@ -42,7 +42,7 @@ export default styled.div`
     button {
       height: 25px;
       width: 40px;
-      
+
       border-radius: 4px;
       border: none;
       &:first-child {
