@@ -7,8 +7,9 @@ const useActions = () => {
   const dispatch = useDispatch();
   const basketItems = useBasketValue();
 
-  const getIndex = useCallback(id =>
-    basketItems.map(i => i).findIndex(f => f.id === id)
+  const getIndex = useCallback(
+    id => basketItems.map(i => i).findIndex(f => f.id === id),
+    [basketItems]
   );
 
   const subTotal = basketItems
@@ -36,7 +37,7 @@ const useActions = () => {
             ...basketItems,
             {
               ...item,
-              weight: (item.weight += 0.2),
+              weight: item.weight + 0.2,
             },
           ],
         });
@@ -85,7 +86,7 @@ const useActions = () => {
             ...basketItems,
             {
               ...item,
-              weight: hasNoItem ? 0 : (item.weight -= 0.2),
+              weight: hasNoItem ? 0 : item.weight - 0.2,
             },
           ],
         });
