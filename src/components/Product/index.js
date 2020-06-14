@@ -20,11 +20,11 @@ const Product = ({ id, name, priceByItem, priceByWeight, unitPrice, weight, url,
       </div>
       
       {priceByItem && (
-        <p className='unitPrice'>£{unitPrice}/each</p>
+        <p className='unitPrice'>£{unitPrice.toFixed(2)}/each</p>
       )}
 
       {priceByWeight && (
-        <p className='unitPrice'>£{unitPrice}/kg</p>
+        <p className='unitPrice'>£{unitPrice.toFixed(2)}/kg</p>
       )}
 
       <div className='bottom-div'>

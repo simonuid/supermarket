@@ -15,13 +15,19 @@ const Basket = () => {
   const totalSavings =
     total.discount && total.discount.length > 0 && total.discount.map(d => d.saved).reduce((ac, c) => ac + c, 0);
 
+  const getPriceByWeightIndex = () => basketItems
+    .map(i => i)
+    .findIndex((f => f.priceByWeight === true));
+
+  const hasWeightItem = basketItems[getPriceByWeightIndex()] ? basketItems[getPriceByWeightIndex()].weight > 0 : null;
+
   return (
     <Styled>
       <h2>Basket</h2>
       <ul className='list'>
         {basketItems.map(i => {
           if (i.priceByWeight) {
-            return (
+            return !!hasWeightItem && (
               <li key={uniqueId()}>
                 <span className='item-total weight'>
                   <span>
@@ -37,17 +43,18 @@ const Basket = () => {
             <li key={uniqueId()}>
               <span className='item-total'>
                 <span>{i.name}</span>
-                <span className='item-price'>{`£${i.unitPrice}`}</span>
+                <span className='item-price'>{`£${i.unitPrice.toFixed(2)}`}</span>
               </span>
             </li>  
           )
        })}
       </ul>
+
       {basketItems.length > 0 && (
         <>
           <hr/ >
           <p className='sub-total'>
-            <span>Sub-total</span>
+            <span>Sub total</span>
             <span>{`£${subTotal}`}</span>
           </p>
 
@@ -64,7 +71,7 @@ const Basket = () => {
               <>
                 {hasDiscount && <li className='title'>Savings</li>}
                 {total.discount.map(m => (
-                  <li>
+                  <li key={uniqueId()}>
                     <span className='item-total'>
                       <span>{m.name}</span>
                       <span className='item-price'>-£{m.saved}</span>
@@ -95,8 +102,6 @@ const Basket = () => {
                 </li>
               </>
             )}
-
-            
           </ul>
         </>
       )}
