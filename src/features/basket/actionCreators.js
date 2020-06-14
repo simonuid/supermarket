@@ -66,6 +66,7 @@ const useActions = () => {
       const item = basketItems[index];
       const hasNoItem = item.weight.toFixed(2) <= 0;
       basketItems.splice(index, 1);
+
       dispatch({
         type: REMOVE_ITEM,
         totalBeforeDiscount: hasNoItem ? 0 : subTotal - (unitPrice * 0.2),
@@ -74,7 +75,7 @@ const useActions = () => {
           ...basketItems,
           {
             ...item,
-            weight: hasNoItem ? item.weight : item.weight -= 0.2
+            weight: hasNoItem ? 0 : item.weight -= 0.2
           }
         ]
       });
