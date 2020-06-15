@@ -28,13 +28,13 @@ const useActions = () => {
       /** If basket has this item and it's priceByWeight, increase the weight by 0.2kg */
       if (priceByWeight && index > -1) {
         const item = basketItems[index];
-        basketItems.splice(index, 1);
+        const newItems = basketItems.filter((b, i) => i !== index);
         dispatch({
           type: ADD_ITEM,
           totalBeforeDiscount: subTotal + unitPrice * 0.2,
           showCheckout: false,
           basketItems: [
-            ...basketItems,
+            ...newItems,
             {
               ...item,
               weight: item.weight + 0.2,
@@ -70,40 +70,36 @@ const useActions = () => {
   const removeItem = useCallback(
     (id, priceByWeight, unitPrice) => {
       const index = getIndex(id);
+      const newItems = basketItems.filter((b, i) => i !== index);
       /** If basket has this item and it's priceByWeight, decrease the weight by 0.2kg */
       if (priceByWeight && index > -1) {
         const item = basketItems[index];
-        const hasNoItem = item.weight.toFixed(2) <= 0;
-        basketItems.splice(index, 1);
-
+        const lastByWeightItem = item.weight.toFixed(2) <= 0.2;
+        
         dispatch({
           type: REMOVE_ITEM,
-          totalBeforeDiscount: hasNoItem
+          totalBeforeDiscount: lastByWeightItem
             ? subTotal
             : subTotal - unitPrice * 0.2,
           showCheckout: false,
           basketItems: [
-            ...basketItems,
+            ...newItems,
             {
               ...item,
-              weight: hasNoItem ? 0 : item.weight - 0.2,
+              weight: lastByWeightItem ? 0 : item.weight - 0.2,
             },
           ],
         });
       } else {
-        if (index > -1) {
-          basketItems.splice(index, 1);
-        }
-
-        const hasQuantityItem =
-          subTotal - unitPrice > 0 ? subTotal - unitPrice : 0;
-        const hasWeightItem = subTotal > 0 ? subTotal - unitPrice * 0.2 : 0;
-
+        const item = basketItems[index];
+        const hasPriceByItem = item ? subTotal - item.unitPrice : 0
+        const hasPriceByWeight = item ? subTotal - item.unitPrice * 0.2 : 0;
+      
         dispatch({
           type: REMOVE_ITEM,
           showCheckout: false,
-          totalBeforeDiscount: priceByWeight ? hasWeightItem : hasQuantityItem,
-          basketItems: [...basketItems],
+          totalBeforeDiscount: priceByWeight ? hasPriceByWeight : hasPriceByItem,
+          basketItems: index > -1 ? [...newItems] : [...basketItems],
         });
       }
     },

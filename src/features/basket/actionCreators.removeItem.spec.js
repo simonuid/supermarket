@@ -176,7 +176,7 @@ describe('features > basket > removeItem priceByWeight action', () => {
       /** store.dispatch should be run with proper action */
       expect(store.dispatch).toHaveBeenCalledWith({
         type: REMOVE_ITEM,
-        totalBeforeDiscount: 0.8999999999999999,
+        totalBeforeDiscount: 1.698,
         showCheckout: false,
         basketItems: [
           priceByItem,
