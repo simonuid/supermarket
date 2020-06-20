@@ -64,6 +64,7 @@ const useActions = () => {
       }
     },
     [basketItems, dispatch, getIndex, subTotal]
+    
   );
 
   /** Remove item action */
@@ -75,7 +76,7 @@ const useActions = () => {
       if (priceByWeight && index > -1) {
         const item = basketItems[index];
         const lastByWeightItem = item.weight.toFixed(2) <= 0.2;
-        
+
         dispatch({
           type: REMOVE_ITEM,
           totalBeforeDiscount: lastByWeightItem
