@@ -10,6 +10,7 @@ const WrappedApp = withReduxFeatures(App);
 
 ReactDOM.render(<WrappedApp />, document.getElementById('root'));
 
+
 /**
  * If you want your app to work offline and load faster,
  * you can change unregister() to register() below.
