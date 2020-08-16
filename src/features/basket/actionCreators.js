@@ -11,6 +11,7 @@ const useActions = () => {
     id => basketItems.map(i => i).findIndex(f => f.id === id),
     [basketItems]
   );
+  
 
   const subTotal = basketItems
     .map(i => {
