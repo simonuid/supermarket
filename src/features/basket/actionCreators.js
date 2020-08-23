@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import {useBasketValue} from './selectors';
-import {REMOVE_ITEM, ADD_ITEM, GET_TOTAL} from './actionTypes';
+import { REMOVE_ITEM, ADD_ITEM, GET_TOTAL } from './actionTypes';
 
 const useActions = () => {
   const dispatch = useDispatch();
