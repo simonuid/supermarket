@@ -18,7 +18,6 @@ const useActions = () => {
         return i.unitPrice * i.weight;
       }
       return i.unitPrice;
-      
     })
     .reduce((ac, c) => ac + c, 0);
 
