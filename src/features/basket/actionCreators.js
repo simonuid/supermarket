@@ -12,6 +12,7 @@ const useActions = () => {
     [basketItems]
   );
 
+  
   const subTotal = basketItems
     .map(i => {
       if (i.priceByWeight) {
