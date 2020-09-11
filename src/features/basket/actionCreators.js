@@ -7,6 +7,9 @@ const useActions = () => {
   const dispatch = useDispatch();
   const basketItems = useBasketValue();
 
+
+  
+
   const getIndex = useCallback(
     id => basketItems.map(i => i).findIndex(f => f.id === id),
     [basketItems]
